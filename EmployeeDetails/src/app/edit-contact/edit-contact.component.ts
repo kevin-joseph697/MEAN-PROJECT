@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Employee } from '../shared/employee.model';
 import { EmployeeService } from '../shared/employee.service';
 
@@ -15,7 +15,7 @@ export class EditContactComponent implements OnInit {
   data:any
  
   employee = new Employee
-  constructor(private employeeService:EmployeeService, private route:ActivatedRoute, private formbuilder:FormBuilder) { }
+  constructor(private employeeService:EmployeeService, private route:ActivatedRoute, private formbuilder:FormBuilder, private router:Router) { }
 
   contactform = new FormGroup({
     FirstName:new FormControl(''),
@@ -48,12 +48,22 @@ export class EditContactComponent implements OnInit {
       })
     })
   }
+
+  navi(){
+    this.router.navigate([''])
+  }
   onUpdate(){
     this.employeeService.UpdateContact(this.id,this.contactform.value).subscribe(res =>{
+    
+      if(!this.contactform.valid){
+       return alert('Please fill out the fields')
+     }
+     
       this.data = res
       console.log(this.data);
       alert('Data has been updated successfully')
       this.createForm();
+      this.navi()
       
     })
   }

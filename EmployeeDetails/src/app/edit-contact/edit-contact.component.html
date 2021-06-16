@@ -15,7 +15,7 @@
                     <label for="Phone">Phone Number</label>
                     <input type="number" class="form-control" id="Phone" formControlName="Phone" ngModel placeholder="Phone Number" required>
                   </div>
-                  <button type="submit" class="btn btn-primary">Save</button>
+                  <button type="submit" class="btn btn-primary" [disabled]="!contactform.valid">Update</button>
             </form>
        </div>
     </div>
